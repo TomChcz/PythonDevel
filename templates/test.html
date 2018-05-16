@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Test
+{% endblock %}
+
+{% block content %}
+    
+<div class="container">
+    <h1>BELLO {{ session.get('email') }}, this is a test</h1>
+    <br/>
+    <img src="http://icons.iconarchive.com/icons/designbolts/despicable-me-2/128/Minion-Reading-icon.png" alt="minion"/>
+    <br/>
+    <br/>
+
+    {% if not exercises %}
+        no test data in database, please try again. click here to go <a href="{{ url_for('home') }}">home </a>
+    {% else %}
+
+        <h3>Good Luck!</h3>
+        <br/>
+        <br/>
+        V testu je {{ test_size }} prikladu<br>
+        <br>
+        Test: {{ topic_label }}<br>
+
+        <!-- begin form -->
+        <form action="{{ url_for('test_result') }}" method="post">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Zadani</th>
+                        <th></th>
+                        <th>Tvoje reseni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exercise in exercises %}
+                    <tr>
+                        <td>{{ exercise.description }}</td>
+                        <td>=</td>
+                        <td>
+                            <input type="text" name="answer" size="5">
+                            <input type="hidden" name="solution" value="{{ exercise.solution }}">
+                            <input type="hidden" name="description" value="{{ exercise.description }}">
+                            <input type="hidden" name="exercise_uid" value="{{ exercise.uid }}">
+                            <input type="hidden" name="index" value="{{ loop.index }}">
+                            <input type="hidden" name="points" value="{{ exercise.points }}">
+                        </td>
+                        
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="test_size" value="{{ test_size }}">
+            <input type="hidden" name="topic_code" value="{{ topic_code }}">
+            <input type="hidden" name="timestamp_start" value="{{ timestamp_start }}">
+            <input type="hidden" name="test_type" value="Normální">
+            <input type="submit" class="btn-primary" value="Odeslat"/>
+        </form>
+        <br/>
+        <br/>
+    {% endif %}
+</div>
+{% endblock %}
