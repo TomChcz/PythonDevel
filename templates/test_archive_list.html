@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	Seznam testů pro: {{ user.nickname }}
+{% endblock %}
+
+
+{% block content %}
+<!-- past results -->
+	<div class="container">
+		<h2>Moje testy</h2>
+
+		<br>
+		{% if not test_results %}
+
+			<h2>Ještě nemáš žádné testy, zkus si něco:</h2>
+			<br>
+			{% include 'test_selector.html' %}
+
+
+
+		{% elif test_results %}
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Typ testu</th>
+						<th>Zadání</th>
+						<th>Skóre</th>
+						<th>Počet příkladů</th>
+						<th>Datum</th>
+						<th>Týden</th>
+						<th>Čas testu</th>
+						<th>Normální / opakovaný</th>
+						<th>Detail testu</th>
+					</tr>
+				</thead>
+					{% for result in test_results %}
+					<tr>
+						<td>{{ result.section }}</td>
+						<td>{{ result.description }}</td>
+						<td>{{ '%0.0f'|format(result.score) }} %</td>
+						<td>{{ result.test_size }}</td>
+						<td>{{ result.date.strftime('%d. %m. %Y, %H:%M') }}</td>
+						<td>{{ result.week }}
+						<td>{{ result.duration_formatted }}</td>
+						<td>{{ result.test_type }}</td>
+						<td><a href="{{ url_for('tests', test_uid=result.uid) }}">Zobrazit</a></td>
+					</tr>
+					{% endfor %}
+				<tbody>
+				</tbody>
+			</table>
+		{% endif %}
+
+	</div>
+{% endblock %}

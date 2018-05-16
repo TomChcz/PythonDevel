@@ -1,0 +1,272 @@
+<!-- main test template -->
+
+<div class="container">
+	
+	Skóre: {{ test_results.score }} %<br>
+	Získáno bodů: {{ test_results.points }}<br>
+	Téma: {{ test_results.section }}<br>
+	Typ testu: {{ test_results.test_type }}<br>
+	Doba trvání testu: {{ test_results.duration_formatted }}<br>
+
+</div>
+
+<br>
+
+<div class="container">
+	<table class="table table-striped">
+
+	{% if test_results.template == 'var1_sol1_end_newline' %}
+		<thead>
+			<tr>
+				<th style="vertical-align: middle">
+					{{ test_results.description }}
+				</th>
+				<th style="vertical-align: middle">
+					Tvoje řešení
+				</th>
+				<th style="vertical-align: middle">
+					Hodnocení
+				</th>
+				<th style="vertical-align: middle">
+					Správné řešení
+				</th>
+				<th style="vertical-align: middle">
+					Získané body
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for test in test_results_detail %}
+				<tr style="color: {% if test.evaluation == 'Správně' %}green{% else %}red{% endif %}">
+					<td style="vertical-align: middle">
+						{{ test.var1 }}
+					</td>
+					<td style="vertical-align: middle">
+						{% if not test.answer1 %}_{% else %}{{ test.answer1 }}{% endif %}
+					</td>
+					<td style="vertical-align: middle">
+						{{ test.evaluation }}
+					</td>
+					<td style="vertical-align: middle">
+						{{ test.solution1 }}
+					</td>
+					<td style="vertical-align: middle">
+						{{ test.points }}
+					</td>
+				</tr>
+				<!-- padding row -->
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+
+			{% endfor %}
+		</tbody>
+	
+	{% elif test_results.template == 'var1_sol2_end_newline' %}
+		<thead>
+			<tr>
+				<th style="vertical-align: middle">
+					{{ test_results.description }}
+				</th>
+				<th style="vertical-align: middle">
+					<!-- padding for "<" symbol from exercise -->
+				</th>
+				<th style="vertical-align: middle">
+					Tvoje řešení
+				</th>
+				<th style="vertical-align: middle">
+					Hodnocení
+				</th>
+				<th style="vertical-align: middle">
+					Správné řešení
+				</th>
+				<th style="vertical-align: middle">
+					Získané body
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for test in test_results_detail %}
+				<tr style="color: {% if test.evaluation == 'Správně' %}green{% else %}red{% endif %}">
+					<td style="vertical-align: middle">
+						{{ test.var1 }}
+					</td>
+					<td style="vertical-align: middle" width="20">
+						&nbsp<
+					</td>
+					<td style="vertical-align: middle">
+						<table>
+							<tr style="vertical-align: middle">
+								<td width="30" align="center" style="border: 1px solid black">
+									{% if not test.answer1 %}_{% else %}{{ test.answer1 }}{% endif %}
+								</td>
+							</tr>
+						</table>
+						<br>
+						<table>
+							<tr style="vertical-align: middle">
+								<td width="30" align="center" style="border: 1px solid black">
+									{% if not test.answer2 %}_{% else %}{{ test.answer2 }}{% endif %}
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td style="vertical-align: middle">
+						{{ test.evaluation }}
+					</td>
+					<td style="vertical-align: middle">
+						<table>
+							<tr style="vertical-align: middle">
+								<td width="30" align="center" style="border: 1px solid black">{{ test.solution1 }}</td>
+							</tr>
+						</table>
+						<br>
+						<table>
+							<tr style="vertical-align: middle">
+								<td width="30" align="center" style="border: 1px solid black">{{ test.solution2 }}</td>
+							</tr>
+						</table>
+					</td>
+					<td style="vertical-align: middle">
+						{{ test.points }}
+					</td>
+				</tr>
+				<!-- padding row -->
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+
+			{% endfor %}
+		</tbody>
+
+	{% elif test_results.template == 'var2_sol1_end_newline' %}
+		<thead>
+			<tr>
+				<th style="vertical-align: middle">
+					{{ test_results.description }}
+				</th>
+				<th style="vertical-align: middle">
+					Tvoje řešení
+				</th>
+				<th style="vertical-align: middle">
+					Hodnocení
+				</th>
+				<th style="vertical-align: middle">
+					Správné řešení
+				</th>
+				<th style="vertical-align: middle">
+					Získané body
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for test in test_results_detail %}
+			<tr style="color: {% if test.evaluation == 'Správně' %}green{% else %}red{% endif %}">
+				<td>
+					<table>
+						<tr align="center">
+							<td bgcolor="lightblue" width="30" style="vertical-align: middle">
+								{{ test.var1 }}
+							</td>
+							<td bgcolor="yellow" width="30" style="vertical-align: middle">
+								{{ test.var2 }}
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td style="vertical-align: middle">
+					{% if not test.answer1 %}_{% else %}{{ test.answer1 }}{% endif %}
+				</td>
+				<td style="vertical-align: middle">
+					{{ test.evaluation }}
+				</td>
+				<td style="vertical-align: middle">
+					{{ test.solution1 }}
+				</td>
+				<td style="vertical-align: middle">
+					{{ test.points }}
+				</td>
+
+			</tr>
+			<!-- padding row -->
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+
+
+	{% elif test_results.template =='var2_sol1_between_newline' %}
+		<thead>
+			<tr>
+				<th style="vertical-align: middle">
+					{{ test_results.description }}
+				</th>
+
+				<th style="vertical-align: middle">
+					Hodnocení
+				</th>
+				<th style="vertical-align: middle">
+					Správné řešení
+				</th>
+				<th style="vertical-align: middle">
+					Získané body
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for test in test_results_detail %}
+			<tr style="color: {% if test.evaluation == 'Správně' %}green{% else %}red{% endif %}">
+				<td style="vertical-align: middle">
+					<table>
+						<tr>
+							<td>
+								{% if test.var1|int < 10 %}&nbsp&nbsp{% endif %}{{ test.var1 }}&nbsp&nbsp
+							</td>
+							<td align="center" style="border: 1px solid black" width="20">
+								{% if not test.answer1 %}_{% else %}{{ test.answer1 }}{% endif %}
+							</td>
+							<td>
+								&nbsp&nbsp{{ test.var2 }}
+							</td>
+						</tr>
+					</table>
+				</td>
+		
+				<td style="vertical-align: middle">
+					{{ test.evaluation }}					
+				</td>
+				<td style="vertical-align: middle">
+					{{ test.solution1 }}
+				</td>
+				<td style="vertical-align: middle">
+					{{ test.points }}
+				</td>
+			</tr>
+			<!-- padding row -->
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+		
+	{% endif %}
+	</table>
+
+</div>

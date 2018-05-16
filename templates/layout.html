@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+		<link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+		
+		<!-- http://getbootstrap.com/ -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <meta charset="utf-8"/>
+        <meta content="initial-scale=1, width=device-width" name="viewport"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<title>{% block title %}{% endblock %}</title>
+
+	</head>
+
+	<body>
+
+		<div class="container">
+			<nav class="navbar navbar-fixed-top" style="background-color: #e3f2fd;">
+			  <div class="container">
+			    <div class="navbar-header">
+			     	<a class="navbar-brand" href="{{ url_for('index') }}">AMOS</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			    	<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+			    	<li><a href="{{ url_for('test_archive') }}">Moje testy</a></li>
+			    	<li><a href="#">Profil</a></li>
+					{% if session.get('email') != None %}
+			      		<li><a href="{{ url_for('logout') }}">Odhlásit se</a></li>
+			      	{% else %}
+			      		<li><a href="{{ url_for('login') }}">Přihlásit se</a></li>
+			      	{% endif %}
+			      	<li><a href="{{ url_for('sysinfo') }}">sysinfo</a></li>
+			    </ul>
+			  </div>
+			</nav>
+
+		</div>
+
+
+		<div class="container" style="text-align: center;">
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+		  <br><br><br><br>
+		    <p class=flashes>
+		    {% for message in messages %}
+		      <font style="color:red;">{{ message }}</font><br>
+		    {% endfor %}
+		    </p>
+		  {% endif %}
+		{% endwith %}
+
+		</div>
+
+		<header>
+			<div class="container">
+
+			</div>
+		</header>
+
+		{% block content %}
+
+		{% endblock %}
+		<br><br>
+		<footer>
+			<div class="container" style="text-align: right">
+				copy-left © klAtom  *** 2017 ***
+			</div>
+			
+		</footer>
+	</body>
+
+</html>
+	

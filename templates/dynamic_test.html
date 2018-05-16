@@ -1,0 +1,175 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	Test: {{ test[0].section }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+		<h1><u>{{ test[0].section }}</u></h1>
+		
+		<br>
+
+
+		<h3>{{ test[0].description }}</h3>
+		{% if msg %}
+			({{ test_size }} exercises not available, showing maximum)
+		{% endif %}<br>
+
+		<!-- dynamic template based on test type -->
+		<form action="{{ url_for('dynamic_test_eval') }}" method="post">
+			<table>
+			{% if test[0].template == 'var1_sol1_end_newline' %}
+				{% for t in test %}
+					<tr>
+						<td style="vertical-align: middle">
+							{{ t.var1 }}
+							<input type="hidden" name="variable1" value="{{ t.var1 }}">
+							<input type="hidden" name="variable2" value="{{ t.var2 }}">
+						</td>
+						<td width="20" style="vertical-align: middle">
+							&nbsp
+						</td>
+						<td style="vertical-align: middle">
+							<input type="text" name="answer1" size="5">
+							<input type="hidden" name="answer2" value="na">
+							<input type="hidden" name="solution1" value="{{ t.solution1 }}">
+							<input type="hidden" name="solution2" value="{{ t.solution2 }}">
+							<input type="hidden" name="points" value="{{ t.points }}">
+							<input type="hidden" name="exercise_uid" value="{{ t.uid }}">
+						</td>
+					</tr>
+					<!-- padding row -->
+					<tr>
+						<td>
+							<br>
+						</td>
+					</tr>
+				{% endfor %}
+				<input type="hidden" name="template" value="{{ test[0].template }}">
+			
+			{% elif test[0].template == 'var1_sol2_end_newline' %}
+				{% for t in test %}
+					<tr>
+						<td style="vertical-align: middle">
+							{{ t.var1 }}
+							<input type="hidden" name="variable1" value="{{ t.var1 }}">
+						</td>
+						<td width="20" style="vertical-align: middle">
+							&nbsp<
+						</td>
+						<td style="vertical-align: middle">
+							<input type="text" name="answer1" size="5">
+							<input type="hidden" name="solution1" value="{{ t.solution1 }}"><br>
+							<input type="text" name="answer2" size="5">
+							<input type="hidden" name="solution2" value="{{ t.solution2 }}">
+							<input type="hidden" name="points" value="{{ t.points }}">
+							<input type="hidden" name="exercise_uid" value="{{ t.uid }}">
+						</td>
+					</tr>
+					<!-- padding row -->
+					<tr>
+						<td>
+							<br>
+						</td>
+					</tr>
+				{% endfor %}
+				<input type="hidden" name="template" value="{{ test[0].template }}">
+
+			{% elif test[0].template == 'var2_sol1_end_newline' %}
+				{% for t in test %}
+					<tr>
+						<td>
+							<table>
+								<tr align="center">
+									<td bgcolor="lightblue" width="30" style="vertical-align: middle">
+										{{ t.var1 }}
+										<input type="hidden" name="variable1" value="{{ t.var1 }}">
+									</td>
+									<td bgcolor="yellow" width="30" style="vertical-align: middle">
+										{{ t.var2 }}
+										<input type="hidden" name="variable2" value="{{ t.var2 }}">
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="20" style="vertical-align: middle">
+						</td>
+							
+						<td style="vertical-align: middle">
+							<input type="text" name="answer1" size="5">
+							<input type="hidden" name="solution1" value="{{ t.solution1 }}">
+							<input type="hidden" name="answer2" value="na">
+							<input type="hidden" name="solution2" value="{{ t.solution2 }}">
+							<input type="hidden" name="points" value="{{ t.points }}">
+							<input type="hidden" name="exercise_uid" value="{{ t.uid }}">
+						</td>
+					</tr>
+					<!-- padding row -->
+					<tr>
+						<td>
+							<br>
+						</td>
+					</tr>
+				{% endfor %}
+				<input type="hidden" name="template" value="{{ test[0].template }}">
+
+			{% elif test[0].template =='var2_sol1_between_newline' %}
+				{% for t in test %}
+					<tr>
+						<td width="30" align="right" style="vertical-align: middle">
+							{{ t.var1 }}
+							<input type="hidden" name="variable1" value="{{ t.var1 }}">
+						</td>
+						<td align="center" width="50" style="vertical-align: middle">
+							<input type="text" name="answer1" size="2">
+							<input type="hidden" name="solution1" value="{{ t.solution1 }}">
+							<input type="hidden" name="answer2" value="na">
+							<input type="hidden" name="solution2" value="{{ t.solution2 }}">
+							<input type="hidden" name="points" value="{{ t.points }}">
+							<input type="hidden" name="exercise_uid" value="{{ t.uid }}">
+						</td>
+						<td width="50" style="vertical-align: middle">
+							{{ t.var2 }}
+							<input type="hidden" name="variable2" value="{{ t.var2 }}">
+
+						</td>
+					</tr>
+					<!-- padding row -->
+					<tr>
+						<td>
+							<br>
+						</td>
+					</tr>
+				{% endfor %}
+				<input type="hidden" name="template" value="{{ test[0].template }}">
+
+
+				
+			{% endif %}
+			</table>
+			<br>
+			<input type="hidden" name="test_size" value="{{ test|length }}">
+			<input type="hidden" name="test_start" value ="{{ test_start }}">
+			<input type="hidden" name="grade" value="{{ test[0].grade }}">
+			<input type="hidden" name="area" value="{{ test[0].area }}">
+			<input type="hidden" name="section" value="{{ test[0].section }}">
+			<input type="hidden" name="description" value="{{ test[0].description }}">
+			<input type="hidden" name="test_type" value="{{ test_type }}">
+			<button type="submit" class="btn btn-primary">Hotovo!</button>
+		</form>
+
+
+		<br>
+	</div>
+	<div class="container">
+		<br>
+		devel:<br>		
+		template: {{ test[0].template }}<br>
+		test size: {{ test|length }}<br>
+		test type: {{ test_type }}<br>
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	sysinfo
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		
+		<h1>sysinfo</h1>
+
+		<br>
+		Počet témat: {{ sections }}<br>
+		Počet typů příkladů: {{ descriptions }}<br>
+		Počet příkladů: {{ exercises }}<br>
+
+		<h1>user info</h1>
+
+		<br>
+		Uživatelů: {{ users }}<br>
+		Počítáno testů: {{ tests }}, z toho správně {{ tests_success }} ({{ '%0.0f'|format(tests_success_rate) }}%)<br>
+		Počítáno příkladů: {{ tests_exercises}}, z toho správně {{ tests_exercises_success }} ({{ '%0.0f'|format(exercises_success_rate) }}%)<br>
+
+	</div>
+{% endblock %}

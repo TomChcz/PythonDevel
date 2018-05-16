@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Hlavni stranka
+{% endblock %}
+
+{% block content %}	
+	<main>
+		<div class="container">
+			<table>
+				<tr>
+					<td>
+						<h1>Ahoj.</h1><br>
+						<a href="{{ url_for('signup') }}" class="btn-primary">Zaregistrovat</a>
+						<a href="{{ url_for('login') }}" class="btn-secondary">Přihlásit se</a>
+					</td>
+					<td>
+						<img src="{{ url_for('static', filename='img/minions.jpg') }}" alt="Banana!!" height="232" width="400">
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<br>
+		<div class="container">
+			<h3>nebo rovnou zkus test</h3>
+		</div>
+		
+		<div class="container">
+			<!-- test selector begin -->
+			{% include 'test_selector.html' %}
+			<!-- test selector end -->
+		</div>
+
+
+
+	</main>
+{% endblock %}
+
+
+	

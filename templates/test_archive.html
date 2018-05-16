@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Výsledky testu: {{ test_results.uid }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+	<h1>Test číslo: {{ current_test }}</h1> z celkem {{ total_tests_taken }}<br>
+	<br>
+	{% if prev_test %}
+		<a href="{{ url_for('tests', test_uid=prev_test ) }}">Předcházející test</a> 
+	{% else %}
+		Není předcházející test 
+	{% endif %}
+	 | 
+	{% if next_test %}
+		<a href="{{ url_for('tests', test_uid=next_test) }}">Další test</a> <br>
+	{% else %}
+		Není další test<br>
+	{% endif %}
+	<br>
+</div>
+<!-- test result start -->
+
+
+{% include 'test_detail_body.html' %}
+
+
+<div class="container">
+	
+	Tvoje dalsi testy:<br><br>
+
+	{% for test in user_tests %}
+		{% if test.uid != test_results.uid %}
+			Test cislo: <a href="{{ url_for('tests', test_uid=test.uid) }}">{{ test.user_test_order }}</a>
+			<br>
+		{% else %}
+			Test cislo: {{ test.user_test_order }} (Tento test)<br>
+		{% endif %}
+		
+	{% endfor %}
+
+
+</div>
+<br><br>
+<div class="container">
+	Devel info:<br>
+	Celkem testu: {{ total_tests_taken }}, index: {{ current_test }}<br>
+</div>
+
+<br>
+
+
+{% endblock %}

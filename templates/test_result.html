@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Test result
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+{% if score == 100 %}
+    <img src="{{ url_for('static', filename='img/xwing.gif') }}">
+{% else %}
+    <img src="{{ url_for('static', filename='img/tiefighter.gif') }}">
+{% endif %}
+</div>
+
+
+
+
+
+<div class="container">
+    <h1>Tvoje vysledky</h1>
+
+    <br/>
+
+    <h3>Pocet prikladu: {{ test_size }}</h3><br/>
+    user email: {{ session.get('email')|default('neprihlasen', True) }}<br/><br/>
+    user uid: {{ user.uid|default('neprihlasen', True) }}<br/><br/>
+    test_uid: {{ test_uid }}<br><br>
+    topic_code: {{ topic_code }}<br><br>
+    topic_label: {{ topic_label }}<br/>
+    Spravne: {{ correct }}<br/>
+    Spatne: {{ wrong }}<br/>
+    Uspesnost: {{ '%0.2f'|format(score) }} %<br/>
+    Points: {{ points }}<br>
+    duration_formatted: {{ duration_formatted }}<br>
+
+    <br/>
+</div>
+  
+<div class="container">
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Zadani
+                </th>
+                <th>
+                    Tvoje odpoved
+                </th>
+                <th>
+                    Hodnoceni
+                </th>
+                <th>
+                    Spravne reseni
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in results.items() %}
+                <tr>
+                    <!-- id: {{ key }} : -->
+                    {% for x in range(columns) %} <!-- skip the exercise uid -->
+                        <td>
+                            {% if value[2] == "Špatně" %}
+                                <font style="color:red;">
+                                    {% if value[x] =="" %} <!-- show empty sign if answer not provided -->
+                                        --
+                                    {% else %}
+                                        {{ value[x] }} 
+                                    {% endif %}
+                                </font>
+                            {% else %}
+                                <font style="color:green;">
+                                    {% if value[x] =="" %} <!-- show empty sign if answer not provided -->
+                                        --
+                                    {% else %}
+                                        {{ value[x] }} 
+                                    {% endif %}
+                                </font>
+                            {% endif %}      
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+
+<div class="container">
+    
+<!-- if some answers wrong, offer repeat of test -->
+{% if score|int < 100 %}
+    chces zopakovat test?<br/>
+
+    <form action="{{ url_for('test_repeat') }}" method="post">
+        
+        <!-- generate form fields, value[4] holds the exercise uid , value[2] holds user answer-->
+        {% for key, value in results.items() %}
+            {% if value[2] == "Špatně" %}
+                <input type="hidden" name="exercise_uid" value="{{ value[4] }}">
+            {% endif %}
+        {% endfor %}
+        <br>
+        <input type="hidden" name="topic_code" value="{{ topic_code }}">
+        <button type="submit" class="btn btn-primary">Zopakovat pouze spatne odpovedi</button>
+    </form>
+
+    <br>
+    <br>
+
+    <form action="{{ url_for('test_repeat') }}" method="post">
+        
+        <!-- generate form fields, value[4] holds the exercise uid , value[2] holds user answer-->
+        {% for key, value in results.items() %}
+            <input type="hidden" name="exercise_uid" value="{{ value[4] }}">
+        {% endfor %}
+        <br>
+        <input type="hidden" name="topic_code" value="{{ topic_code }}">
+        <button type="submit" class="btn btn-secondary">Zopakovat cely test</button>
+    </form>
+
+{% endif %}
+
+<br/>
+
+
+
+{% if not user %}
+    index <a href="{{ url_for('index') }}"/>here</a>
+{% else %}
+    home <a href="{{ url_for('home') }}"/>here</a><br>
+{% endif %}
+</div>
+
+{% endblock %}
+
+

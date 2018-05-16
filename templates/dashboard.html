@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	Přehled pro: {{ user.nickname }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<h1>Ahoj, {{ user.nickname }}!</h1>
+</div>
+
+<div class="container">
+	
+	Obsah stranky:<br><br>
+
+	1) KPI<br>
+	Celkem<br>
+	posledni tyden<br>
+	- doba stravena, skore, pocet prikladu<br><br>
+
+	2) ranking<br>
+	- vypise aktualni status (ranking, poradi ze vsech podle ziskanych bodu)<br><br>
+
+
+
+	3) formular na spusteni testu<br><br>
+
+	{% include 'test_selector.html' %}
+
+
+	<br>
+
+	4) grafy
+	<br><br>
+
+	5) <a href="{{ url_for('test_archive') }}">archiv testu</a><br>
+
+
+</div>
+
+{% endblock %}

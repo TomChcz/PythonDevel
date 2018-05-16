@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+	test result
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container">
+	<h1>Výsledky testu</h1>
+</div>
+
+
+<br>
+{% include 'test_detail_body.html' %}
+
+<br>
+
+<!-- if some answers wrong, offer repeat of test -->
+{# need to find more elegant way to do this - in controller #}
+<div class="container">
+    <form action="{{ url_for('dynamic_test') }}" method="post">	        
+    	<input type="hidden" name="test_uid" value="{{ test_results.uid }}">
+        <input type="hidden" name="test_type" value="Opakovaný">
+        <button type="submit" class="btn btn-info">Zopakovat test</button>
+    </form>
+
+    <br>	
+	{% if test_results.score|int < 100 %}
+	    <form action="{{ url_for('dynamic_test') }}" method="post">
+	    	<input type="hidden" name="test_uid" value="{{ test_results.uid }}">
+	    	<input type="hidden" name="test_type" value="Opakovaný - původní s chybou">
+	        <button type="submit" class="btn btn-warning">Zopakovat příklady s chybou</button>
+	    </form>
+	{% endif %}
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+<div class="container">
+			<form action="{{ url_for('dynamic_test') }}" method="post">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Matematika</th>
+						<th>Cestina</th>
+						<th>Anglictina</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							Ročník: 
+								<select name="grade">
+									<!-- generate menu options for 9 grades (1 to 9 range) -->
+									{% for i in range(1,grades) %}
+										<option value="{{ i }}">{{ i }}. Ročník</option>
+									{% endfor %}
+								</select>
+								<br><br>
+
+								<!-- generate exercise topics based on grade -->
+							
+								{% for grade in range(1,grades) %}
+									Příklady pro {{ grade }}. ročník: 
+
+									<select name="section">
+										{% for test in math_tests %}
+
+
+											{% if test.grade == grade %}
+
+												<option value="{{ test.section }}">{{ test.section }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+									<br><br>
+								{% endfor %}
+
+								Počet příkladů: 
+								<select name="test_size">
+									{% for size in test_sizes %}
+										<option value="{{ size.test_size }}">{{ size.test_size }}</option>
+									{% endfor %}
+				    			</select> 
+							
+						</td>
+						<td>
+							cestina
+						</td>
+						<td>
+							anglictina
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="hidden" name="test_type" value="Normální">
+			<button type="submit" class="btn btn-primary">Spustit test</button>
+			</form>
+		</div>
